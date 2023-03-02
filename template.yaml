@@ -32,5 +32,5 @@ Outputs:
     Description: "Email Sender Lambda Function ARN"
     Value: !GetAtt EmailSenderFunction.Arn
   EmailSenderFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
+    Description: "Implicit IAM Role created for MailSender World function"
     Value: !GetAtt EmailSenderFunctionRole.Arn
