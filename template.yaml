@@ -1,0 +1,36 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  mail-sender
+
+  Sample SAM Template for mail-sender
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+    MemorySize: 128
+
+Resources:
+  EmailSenderFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: mail_sender/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+        - x86_64
+      Events:
+        Schedule:
+          Type: Schedule
+          Properties:
+            Name: EVERY_12_HOURS
+            Schedule: cron(0 */12 * * *)
+
+Outputs:
+  EmailSenderFunction:
+    Description: "Email Sender Lambda Function ARN"
+    Value: !GetAtt EmailSenderFunction.Arn
+  EmailSenderFunctionIamRole:
+    Description: "Implicit IAM Role created for Hello World function"
+    Value: !GetAtt EmailSenderFunctionRole.Arn
